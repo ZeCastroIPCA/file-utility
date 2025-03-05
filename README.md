@@ -11,7 +11,7 @@ This project is a file utility tool built with Svelte. It provides functionaliti
 To get started with the project, clone the repository and install the dependencies:
 
 ```bash
-git clone https://github.com/your-username/file-utility.git
+git clone https://github.com/ZeCastroIPCA/file-utility.git
 cd file-utility
 npm install
 ```
