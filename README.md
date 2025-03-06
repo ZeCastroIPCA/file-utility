@@ -40,8 +40,7 @@ npm run preview
 
 ## Features
 - Compress images with adjustable compression percentage
-- Compress videos (not supported yet)
-- Compress audio images (not supported yet)
+- Convert images to different formats
 - Download compressed images
 
 ## License
