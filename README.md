@@ -41,7 +41,6 @@ npm run preview
 ## Features
 - Compress images with adjustable compression percentage
 - Convert images to different formats
-- Download compressed images
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) image for more details.
