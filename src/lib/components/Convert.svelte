@@ -2,44 +2,58 @@
     let file: File | null = null;
     let convertedFile: Blob | null = null;
     let loading: boolean = false;
-    let outputFormat: 'jpg' | 'jpeg' | 'png' | 'webp' = 'jpeg';
+    let outputFormat: 'jpeg' | 'png' | 'webp' = 'jpeg';
+    let errorMessage: string | null = null;
 
-    export let onClose: () => void;
-
+    // Handle file input change
     async function handleFileChange(event: Event) {
         const input = event.target as HTMLInputElement;
         file = input.files?.[0] || null;
         convertedFile = null;
+        errorMessage = null;
+
+        if (file && !file.type.startsWith('image/')) {
+            errorMessage = 'Please select a valid image file.';
+            file = null;
+        }
     }
 
+    // Convert the selected file
     async function convert() {
         if (!file) return;
 
         loading = true;
 
         try {
-            const image = await loadImage(file);
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-
-            if (!ctx) throw new Error('Failed to get canvas context');
-
-            canvas.width = image.width;
-            canvas.height = image.height;
-            ctx.drawImage(image, 0, 0);
-
-            const dataUrl = canvas.toDataURL(`image/${outputFormat}`);
-            const response = await fetch(dataUrl);
-            const blob = await response.blob();
-
-            convertedFile = blob;
+            await convertImage();
         } catch (error) {
             console.error('Conversion error:', error);
+            errorMessage = 'An error occurred during conversion.';
         } finally {
             loading = false;
         }
     }
 
+    // Convert image to the selected format
+    async function convertImage() {
+        const image = await loadImage(file!);
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
+        if (!ctx) throw new Error('Failed to get canvas context');
+
+        canvas.width = image.width;
+        canvas.height = image.height;
+        ctx.drawImage(image, 0, 0);
+
+        const dataUrl = canvas.toDataURL(`image/${outputFormat}`);
+        const response = await fetch(dataUrl);
+        const blob = await response.blob();
+
+        convertedFile = blob;
+    }
+
+    // Load image from file
     function loadImage(file: File): Promise<HTMLImageElement> {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
@@ -54,6 +68,7 @@
         });
     }
 
+    // Download the converted file
     function downloadFile() {
         if (!convertedFile) return;
 
@@ -75,13 +90,15 @@
         {#if file}
             <p class="file-name">{file.name}</p>
         {/if}
+        {#if errorMessage}
+            <p class="error-message">{errorMessage}</p>
+        {/if}
     </div>
 
     {#if file}
         <div class="output-format">
             <label for="output-format">Output Format:</label>
             <select id="output-format" bind:value={outputFormat}>
-				<option value="jpg">JPG</option>
                 <option value="jpeg">JPEG</option>
                 <option value="png">PNG</option>
                 <option value="webp">WebP</option>
@@ -101,16 +118,28 @@
 </div>
 
 <style>
+    :root {
+        --primary-color: #6750a4;
+        --primary-color-hover: #5c4593;
+        --background-color: white;
+        --border-color: #eeeeee;
+        --text-color: #333333;
+        --label-color: #625b71;
+        --disabled-color: #ccc;
+        --loading-color: #6750a4;
+        --error-color: #ff0000;
+    }
+
     .convert-section {
-        background-color: white;
-        border: 1px solid #eeeeee;
+        background-color: var(--background-color);
+        border: 1px solid var(--border-color);
         border-radius: 8px;
         padding: 1.5rem;
         margin-top: 2rem;
     }
 
     h2 {
-        color: #333333;
+        color: var(--text-color);
         font-size: 1.5rem;
         margin-bottom: 1rem;
     }
@@ -136,7 +165,7 @@
         display: block;
         width: 100%;
         padding: 1rem 0;
-        background-color: #6750a4; /* Primary purple */
+        background-color: var(--primary-color);
         color: white;
         text-align: center;
         border-radius: 8px;
@@ -146,28 +175,35 @@
     }
 
     .file-upload label:hover {
-        background-color: #5c4593; /* Slightly darker on hover */
+        background-color: var(--primary-color-hover);
     }
 
     .file-name {
         margin-top: 0.5rem;
-        color: #333333;
+        color: var(--text-color);
         font-size: 1rem;
         text-align: center;
     }
 
+    .error-message {
+        color: var(--error-color);
+        font-size: 1rem;
+        text-align: center;
+        margin-top: 0.5rem;
+    }
+
     .output-format {
-		width: 100%;
+        width: 100%;
         display: flex;
         align-items: center;
-		justify-content: center;
+        justify-content: center;
         margin-bottom: 1rem;
     }
 
     .output-format label {
         margin-right: 0.5rem;
         font-weight: 600;
-        color: #333333;
+        color: var(--text-color);
     }
 
     .output-format select {
@@ -175,19 +211,19 @@
         border-radius: 8px;
         border: 1px solid #cccccc;
         font-size: 1rem;
-        color: #333333;
+        color: var(--text-color);
         background-color: white;
         cursor: pointer;
         transition: border-color 0.2s ease;
     }
 
     .output-format select:focus {
-        border-color: #6750a4; /* Primary purple */
+        border-color: var(--primary-color);
         outline: none;
     }
 
     button {
-        background-color: #6750a4; /* Primary purple */
+        background-color: var(--primary-color);
         color: white;
         border: none;
         padding: 1rem 2rem;
@@ -199,17 +235,17 @@
     }
 
     button:hover {
-        background-color: #5c4593; /* Slightly darker on hover */
+        background-color: var(--primary-color-hover);
     }
 
     button:disabled {
-        background-color: #ccc; /* Disabled button color */
+        background-color: var(--disabled-color);
         cursor: not-allowed;
     }
 
     .loading-animation {
         margin-top: 1rem;
         font-size: 1.2rem;
-        color: #6750a4;
+        color: var(--loading-color);
     }
 </style>

@@ -15,34 +15,42 @@
 	</div>
 
 	{#if show === 1}
-		<Compress onClose={() => (show = 0)} />
+		<Compress />
 	{/if}
 
 	{#if show === 2}
-		<Convert onClose={() => (show = 0)} />
+		<Convert />
 	{/if}
 </div>
 
 <style>
+	:root {
+		--primary-color: #6750a4;
+		--primary-color-hover: #5c4593;
+		--background-color: #f5f5f5;
+		--text-color: #333333;
+		--muted-text-color: #625b71;
+	}
+
 	.container {
 		font-family: 'Inter', sans-serif;
-		background-color: #f5f5f5; /* Light gray background */
+		background-color: var(--background-color);
 		border-radius: 12px;
 		box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 		padding: 2rem;
-		max-width: 600px; /* Limit container width */
-		margin: 2rem auto; /* Center the container */
+		max-width: 600px;
+		margin: 2rem auto;
 		text-align: center;
 	}
 
 	h1 {
-		color: #333333; /* Dark gray text */
+		color: var(--text-color);
 		font-size: 2.5rem;
 		margin-bottom: 0.5rem;
 	}
 
 	p {
-		color: #625b71; /* Muted purple text */
+		color: var(--muted-text-color);
 		font-size: 1.2rem;
 		margin-bottom: 2rem;
 	}
@@ -50,11 +58,11 @@
 	.buttons {
 		display: flex;
 		gap: 1rem;
-		justify-content: center; /* Center buttons */
+		justify-content: center;
 	}
 
 	button {
-		background-color: #6750a4; /* Primary purple */
+		background-color: var(--primary-color);
 		color: white;
 		border: none;
 		padding: 1rem 2rem;
@@ -66,6 +74,6 @@
 	}
 
 	button:hover {
-		background-color: #5c4593; /* Slightly darker on hover */
+		background-color: var(--primary-color-hover);
 	}
 </style>

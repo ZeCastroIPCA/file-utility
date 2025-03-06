@@ -1,5 +1,8 @@
-# File Utility
-This project is a file utility tool built with Svelte. It provides functionalities to compress images, videos, and audio files. This project is free to use but should not be used for commercial purposes.
+# Image Utility
+This project is a image utility tool built with Svelte. It provides functionalities to compress and convert images, videos. 
+
+## Context
+This projet is a test to my prompting engineering skills. The whole project was created using GitHub Copilot Chat appart from the initial setup and some minor changes.
 
 ## Table of Contents
 - [Installation](#installation)
@@ -11,8 +14,8 @@ This project is a file utility tool built with Svelte. It provides functionaliti
 To get started with the project, clone the repository and install the dependencies:
 
 ```bash
-git clone https://github.com/ZeCastroIPCA/file-utility.git
-cd file-utility
+git clone https://github.com/ZeCastroIPCA/image-utility.git
+cd image-utility
 npm install
 ```
 
@@ -38,11 +41,11 @@ npm run preview
 ## Features
 - Compress images with adjustable compression percentage
 - Compress videos (not supported yet)
-- Compress audio files (not supported yet)
-- Download compressed files
+- Compress audio images (not supported yet)
+- Download compressed images
 
 ## License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) image for more details.
 
 ```markdown
 Note: This project is free to use but should not be used for commercial purposes.
