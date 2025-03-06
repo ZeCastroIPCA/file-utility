@@ -1,5 +1,8 @@
 # Image Utility
-This project is a image utility tool built with Svelte. It provides functionalities to compress and convert images, videos. 
+This project is a image utility tool built with Svelte. It provides functionalities to compress and convert images, videos.
+
+## Try it out
+You can try the project [here](https://image-utility.onrender.com/).
 
 ## Context
 This projet is a test to my prompting engineering skills. The whole project was created using GitHub Copilot Chat appart from the initial setup and some minor changes.
