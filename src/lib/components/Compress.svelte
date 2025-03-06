@@ -90,7 +90,7 @@
 		<div class="loading-animation">Compressing...</div>
 	{/if}
 
-	{#if compressedFile}
+	{#if compressedFile && !loading}
 		<p>Your file is compressed!</p>
 		<button on:click={downloadFile}>Download</button>
 	{/if}
