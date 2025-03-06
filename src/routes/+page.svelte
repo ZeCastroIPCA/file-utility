@@ -7,7 +7,7 @@
 
 <div class="container">
 	<h1>COMPRESS or CONVERT</h1>
-	<p>almost any file type for free</p>
+	<p>some image types for free</p>
 
 	<div class="buttons">
 		<button class="compress-btn" on:click={() => (show = 1)}> ← COMPRESS </button>
